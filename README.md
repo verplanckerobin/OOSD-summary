@@ -1,3 +1,12 @@
+# OOSD Summary
+## Hoofdstuk 1 Overerving
+primitieve var -> waarde  
+referentie var -> instantie (klasse, array)  
+referentie var -> null (leeg, niets)  
+
+SUBKLASSE -> extends (java code)  
+Check of subklasse is -> instanceof (java code)  
+
 # OOSD Conversions
 ## String to Int
 ```
