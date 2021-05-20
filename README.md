@@ -75,7 +75,8 @@ public interface Comparable<T> {
 public class X implements Comparable<X> {
   public int compareTo(X o) {
     int getal = this.attribute.compareTo(o.getAttribute()); //we onthouden de waarde van EERSTE sortering
-    return getal == 0 ? this.otherAttribute.compareTo(o.getOtherAttribute()) : getal; //we sorteren verder indien eerste gelijk is
+    //we sorteren verder indien eerste gelijk is
+    return getal == 0 ? this.otherAttribute.compareTo(o.getOtherAttribute()) : getal; 
   }
 }
 
@@ -100,6 +101,71 @@ public class FirstNameComparator implements Comparator<Name> {
 Collections.sort(list of objects, new FirstNameComparator());
 ```
 
+## Hoofdstuk 3 Lambda expressies
+**Anonieme innerklasse**  
+Een anonieme innerklasse is een klasse die binnen een methode wordt gedeclareerd maar geen naam heeft. De syntax van een anonieme inner klasse expressie is analoog aan het aanroepen van een constructor, behalve dat deze constructor vervangen wordt door een klasse definitie binnen een code blok.  
+```
+HelloWorld frenchGreeting = new HelloWorld() { --> aanroepen van de interface klasse
+    public void greetSomeone(String someone) {
+        System.out.println("Yooo " + someone);
+    }
+}
+
+//uitvoer
+frenchGreeting.greetSomeone("Robin");
+```
+**Functionele interface**  
+Een functionele interface is een interface met exact 1 abstracte methode.  
+```
+@FunctionalInterface
+public interface MyInterface{
+    // the single abstract method
+    String reverse(String n);
+}
+```
+**Lambda expressie**  
+Lambda expressies kunnen enkel gebruikt worden om functionele interfaces te implementeren. Dit is een expressie die je zoals anonieme klassen toelaat om in een stap een functionele interface te declareren en te instantiëren.
+```
+// Een lambda expressie bevat volgende onderdelen:
+(parameterlijst) -> {statements}
+
+//Vb 1
+HelloWorld frenchGreeting = someone -> System.out.println("Yooo " + someone);
+
+//uitvoer
+frenchGreeting.greetSomeone("Robin");
+
+//Vb 2
+MyInterface ref = (str) -> {
+    String result = "";
+    for(int i = str.length();-1; i >= 0; i--){
+        result += str.charAt(i);
+    }
+    return result;
+}
+```
+**Method reference**  
+Method referenties laten je toe om te refereren naar een bestaande methode gebruik makende van zijn naam. Op die manier zijn methode referenties compacte en eenvoudig leesbare lambda expressies voor methodes die al een naam hebben.  
+LET OP: returntype en parameterlijst zijn belangrijk --> moet hetzelfde zijn als abstracte methode uit interface  
+```
+//implementatie als het over een static methode gaat en dus geen object nodig om methode aan te roepen
+HelloWorld fg = HelloWorldApp::printGreeting; 
+fg.greetSomeone("Fred");
+
+//zelfde maar een gewone methode (niet static) dus er moet een object worden aangemaakt
+HelloWorldApp hwa = new HelloWorldApp(); 
+HelloWorld fg2 = hwa::printGreeting2;
+fg2.greetSomeone("Sara");
+
+//parameter en returntype moet hetzelfde zijn als zoals die van in de interface
+private static void printGreeting(String someone) { 
+	System.out.println("Salut " + someone);
+}
+	
+private void printGreeting2(String someone) {
+	System.out.println("Salut " + someone);
+}
+```
 # OOSD Conversions
 ## String to Int
 ```
