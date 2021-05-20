@@ -19,6 +19,17 @@ char c = s.charAt(0); //returns "h"
 char c = 's';
 String s = String.valueOf(c);
 ```
+## Array to List
+```
+String[] colors = {"Black","Blue","Red"}; //array
+LinkedList<String> lijst = new LinkedList<>(Arrays.asList(colors)); //list
+```
+## List to Array
+Zie hierboven
+```
+lijst.add("Pink")
+colors = lijst.toArray(new String[lijst.size()]);
+```
 
 # Collections
 ## Methode voor afdrukken van lijst
