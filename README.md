@@ -39,7 +39,7 @@ Keyword **final**
 ## Hoofdstuk 2 Polymorfisme & Interfaces
 **Polymorfisme** = veelvormigheid, komt voort uit de 'IS EEN' relatie  
 - Upcasting
-- Downcasting
+- Downcasting  
 ![image](https://user-images.githubusercontent.com/68321900/119004300-b9e1a700-b98e-11eb-8836-687f70fe762b.png)  
 Later wordt motor uitgebreidt:  
 ![image](https://user-images.githubusercontent.com/68321900/119004361-c6fe9600-b98e-11eb-8ded-fa193b11e429.png)  
