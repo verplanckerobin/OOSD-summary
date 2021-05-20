@@ -7,6 +7,42 @@ referentie var -> null (leeg, niets)
 SUBKLASSE -> extends (java code)  
 Check of subklasse is -> instanceof (java code)  
 
+OPERATOR "==" vergelijkt waarden, primitief of adressen in geheugen van referentievariabelen  
+METHODE equals vergelijkt op basis van inhoud  
+--> indien niet overschreven: overerven van Object Klasse  
+--> overschrijven is zelf bepalen waarop vergeleken wordt = source - Generate hashCode() and equals()
+
+Let op constructor in subklasses! Moet constructor van SUPERklasse aanroepen
+
+Methode binnen subklasse overschrijven --> @override (java code)  
+--> methode van superklasse aanroepen binnen subklasse --> super. (java code)
+
+**Abstracte klasse** = kan geen instanties maken van deze klasse  
+--> (*cursief in UML*)  
+--> public abstract class (java code)  
+**Abstracte methode** = methode zonder implementatie, enkel signatuur  
+--> (*cursief in UML*)  
+--> public abstract Type naam(); (java code, let op ; en geen {})  
+
+Attribuut **static**: er bestaat slechts 1 instantie van attribuut = klassevariabele  
+--> wordt gedeeld over alle instanties, ongeacht aantal  
+--> onderlijnt in UML  
+--> om methode te gebruiken moet EERST een object aangemaakt worden
+
+Keyword **final**
+- Attribuut: 
+  - final klassevariabele: waarde toekennen bij declaratie
+  - final instantievariabele: waarde toekennen binnen constructor
+- Variabele: lokaal in methode, eenmalig waarde toegekend
+- Methode: vb setter, voorkomen dat methode kan overschreven worden in subklasse
+
+## Hoofdstuk 2 Polymorfisme & Interfaces
+Polymorfisme = veelvormigheid, komt voort uit de 'IS EEN' relatie  
+Vb: Rechthoek erft van Veelhoek erft van Figuur  
+--> Rechthoek r1 = new Rechthoek();  
+--> Rechthoek r2 = new Veelhoek(); (een rechthoek is ook een veelhoek, polymorfisme)
+ 
+
 # OOSD Conversions
 ## String to Int
 ```
