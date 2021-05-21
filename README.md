@@ -166,6 +166,79 @@ private void printGreeting2(String someone) {
 	System.out.println("Salut " + someone);
 }
 ```
+
+## Hoofdstuk 4 Exception handling
+```
+//maak gebruik van do while
+boolean flag = true;
+
+do {
+   try {
+   	...
+	...
+	...
+	flag = false;
+   } catch (...) {
+   
+   } catch (...) {
+   
+   }
+} while(flag);
+```
+Let op als je vb met tekst werkt, gebruik ```scanner.nextLine``` in catch blok om dat verkeerde stuk tekst in te lezen.  
+--> anders oneindige lus  
+
+Om eigen ExceptionKlasse te maken: nieuwe package "exceptions" --> naam volgens UML  
+(JAVA-regel: we laten alles eindigen op -exception)  
+- Binnen klasse: ```extends (naam gegeven van exceptie in opgave)```  
+- Source -> generate constructors from superclass
+- Enkel nog boodschap aanpassen in default constructor
+
+Deze kan nu vb gebruikt worden bij een methode: ```throw new naamException();```  
+Bij catch-blokken: let op volgorde! Als klasse waarvan erft boven eigen exception staat zal deze nooit bereikt worden  
+
+Let op met Checked VS Unchecked Exceptions:
+- Checked (roze): compiler gaat **altijd** verifieren of jij de exceptie wel afhandelt
+  - Je **moet** deze afhandelen = ```try catch```
+  - Ofwel ben je je bewust dat deze exception komt en laat je dit ook weten aan programma: ```Throws declaratie```
+- Unchecked (blauwe)
+
+## Hoofdstuk 6 Collections
+Collections overlopen:
+- streams
+- for-each loops: tijdens itereren **geen wijzigingen**
+  - enhanced for
+- iterators: **optioneel** er kunnen elementen verwijderd worden
+  - ```hasNext() of hasPrevious()```
+  - ```next()```
+  - ```remove```
+
+In java code:  
+```
+//enhanced for
+public void iterateWithEnhancedFor(Collection<String> colors) {
+  for (String color : colors) {
+    System.out.printf("%s ", color);
+  }
+}
+```
+```
+//for each
+public void iterateWithEnhancedFor(Collection<String> colors) {
+  colors.forEach(c -> System.out.printf("%s ", c));
+}
+```
+```
+//iterator
+public void iterateWithIterator(Collection<String> colors) {
+  Iterator<String> iterator = colors.iterator();
+  while (iterator.hasNext()) {
+    System.out.printf("%s ", iterator.next());
+  }
+}
+```
+KZIT AAN 50:00 IN DE VIDEO LES
+
 # OOSD Conversions
 ## String to Int
 ```
