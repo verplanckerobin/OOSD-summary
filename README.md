@@ -204,6 +204,9 @@ Let op met Checked VS Unchecked Exceptions:
 - Unchecked (blauwe)
 
 ## Hoofdstuk 6 Collections
+Belangrijk om te weten: Array hoort **niet** thuis in Collection framework!  
+--> zie conversions
+
 Collections overlopen:
 - streams
 - for-each loops: tijdens itereren **geen wijzigingen**
@@ -237,7 +240,9 @@ public void iterateWithIterator(Collection<String> colors) {
   }
 }
 ```
-KZIT AAN 50:00 IN DE VIDEO LES
+### List
+- ArrayList: veel opzoekingen
+- LinekdList: veel invoegen/verwijderen
 
 # OOSD Conversions
 ## String to Int
