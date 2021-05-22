@@ -242,7 +242,11 @@ public void iterateWithIterator(Collection<String> colors) {
 ```
 ### List
 - ArrayList: veel opzoekingen
-- LinekdList: veel invoegen/verwijderen
+- LinekdList: veel invoegen/verwijderen  
+
+### Iterators
+iterator --> kan enkel elementen verwijderen
+listIterator --> kan wijzigen/toevoegen/verwijderen  
 
 # OOSD Conversions
 ## String to Int
@@ -265,16 +269,23 @@ char c = s.charAt(0); //returns "h"
 char c = 's';
 String s = String.valueOf(c);
 ```
-## Array to List
+## 1-Dim Array to List
 ```
 String[] colors = {"Black","Blue","Red"}; //array
 LinkedList<String> lijst = new LinkedList<>(Arrays.asList(colors)); //list
 ```
-## List to Array
+## List to 1-Dim Array
 Zie hierboven
 ```
 lijst.add("Pink")
 colors = lijst.toArray(new String[lijst.size()]);
+```
+## 2-Dim Array to ArrayList
+```
+//we voegen niet elk element apart toe maar gewoon de rijen
+list  = new ArrayList<>();
+for (String[] rij: kist)
+  list.addAll(Arrays.asList(rij));
 ```
 
 # Collections
