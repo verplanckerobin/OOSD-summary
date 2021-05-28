@@ -248,6 +248,9 @@ public void iterateWithIterator(Collection<String> colors) {
 iterator --> kan enkel elementen verwijderen
 listIterator --> kan wijzigen/toevoegen/verwijderen  
 
+## Hoofdstuk 7 Streams
+
+
 # OOSD Conversions
 ## String to Int
 ```
