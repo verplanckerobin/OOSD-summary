@@ -249,6 +249,26 @@ iterator --> kan enkel elementen verwijderen
 listIterator --> kan wijzigen/toevoegen/verwijderen  
 
 ## Hoofdstuk 7 Streams
+Voor het gebruik van een stream vertrekken we altijd van een Array of een Collection  
+
+#Intermediate operations
+```.filter()``` --> gebruikt om te filteren, returns boolean, if true = added to stream (eg. filter(age > 18);) (=Predicate)  
+```.map()``` --> takes in one parameter and transforms elements(eg. map(e -> e.toUpperCase());) (=Function)  
+```disctinct()``` --> unieke elemeten uit oorspronkelijke stream, wordt gebruikt gemaakt van **equals** methode  
+```sorted()``` --> 2 types:
+- Natuurlijk: zoals methode hier boven (sorted()) --> compare methode = comparable interface implementeren
+- Zelf gekozen: comparator methode --> interface implementeren  
+
+#Terminal operations
+```sum()```
+```count()```
+```min()``` --> Returns OptionalInt	```min(comparator)``` = eerste ordenen dan min bepalen
+```max()``` --> Returns OptionalInt	```max(comparator)``` = eerste ordenen dan max bepalen
+- Use ```getAsInt/Long/Double()``` ```orElse()``` ```isPresent()```  
+- De klasse Optional heeft ook een methode map vb (.map(e -> e.getName());)  
+![image](https://user-images.githubusercontent.com/68321900/120065419-7adbe180-c071-11eb-92a0-e4c3ef1a12e5.png)
+
+
 
 
 # OOSD Conversions
