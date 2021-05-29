@@ -266,7 +266,15 @@ Voor het gebruik van een stream vertrekken we altijd van een Array of een Collec
 ```max()``` --> Returns OptionalInt	```max(comparator)``` = eerste ordenen dan max bepalen
 - Use ```getAsInt/Long/Double()``` ```orElse()``` ```isPresent()```  
 - De klasse Optional heeft ook een methode map vb (.map(e -> e.getName());)  
-![image](https://user-images.githubusercontent.com/68321900/120065419-7adbe180-c071-11eb-92a0-e4c3ef1a12e5.png)
+![image](https://user-images.githubusercontent.com/68321900/120065419-7adbe180-c071-11eb-92a0-e4c3ef1a12e5.png)  
+```anyMatch()``` --> true als een element voldoet aan voorwaarde
+```allMatch()``` --> true als **alle** elementen voldoen aan voorwaarde
+```forEach()``` --> actie op elk element van stream, kan vanalles zijn maar deze methode is **termninal**
+```reduce()``` --> alle elementen samengevat tot 1 element  
+
+#Stream to Collection/Array
+```.toArray()``` --> vb. toArray(Employee[]::new);  
+```.collect()``` --> vb. collect(Collectors.toList());  
 
 
 
