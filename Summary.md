@@ -203,6 +203,146 @@ Let op met Checked VS Unchecked Exceptions:
   - Ofwel ben je je bewust dat deze exception komt en laat je dit ook weten aan programma: ```Throws declaratie```
 - Unchecked (blauwe)
 
+## Hoofdstuk 5 JavaFX
+Project aanmaken: New - Other - JavaFX - JavaFX Project  
+Create module-info.java mag aangevinkt blijven (Kan je ook zelf laten genereren)  
+Libraries - Modulepath - Add external JARs - base/controls/fxml/graphics  
+Package name: main  
+Finish
+
+![image](https://user-images.githubusercontent.com/68321900/120315836-0d33ed80-c2dd-11eb-879a-81d83330c41d.png)  
+
+### Soorten elementen
+- Label
+- TextField
+- PasswordField
+- Tooltip
+- Button
+- Hyperlink
+
+### StartUp
+```Object root = new Object()``` Maak een object van je scherm/layout  
+```Scene scene = new Scene(root, px, px)``` Maak je scene aan
+
+In aparte packages maken we onze schermen, die extenden van een Layout Lib (Pane, VBox, HBox, etc.)  
+- Maak constructor zonder parameters  
+ - Methode buildGui()  
+- Werk methode uit  
+ - Maak items (label, buttons, etc.)  
+ - Foto is ```ImageView naam = new ImageView(new Image(getClass().getResourceAsStream("path")));``` \ = root = src  
+- Schik items op scherm met coordinaten: ```item.setLayoutX(px);``` ```item.setLayoutY(px);```  
+- Koppeling leggen: ```this.getChildren.addAll(alle nodes);```  
+- Creer eventueel module-info.java (zelfde naam als project)  (Configure - ...)  
+
+Bij CLASS NOT FOUND error: Run as - Run Configurations - Java Application, verwijder lijst (moet nu werken)  
+Om gebruik te maken van SceneBuilder: op je gui packages (waar je schermen maakt) - New - JavaFX - New FXML Document - RC - Open with SceneBuilder  
+- Save file als je klaar bent  
+- Ga in FXML file staan - Klik rechts - Source - Generate Controller  
+- Belangrijk dat deze file erft van **dezelfde** layout  
+- Voeg contructor toe, from superclass zonder parameters:  
+```
+FXMLLoader loader = new FXMLLoader(getClass().getResource("name.fxml"));
+loader.setController(this);
+loader.setRoot(this);
+
+try {
+  loader.load()
+} catch (IOException e) {
+  throw new RuntimeException(e);
+}
+```
+- Zorg ook voor juiste naam in StartUp  
+- Maak je module-info en voeg manueel ```requires javafx.controls;``` toe  
+
+### Gridpane
+- Aligneer grid in midden ```this.setAlignment(Pos.BOTTOM_LEFT);```  
+- Ruimte tussen kolommen ```this.setHgap(10);```  
+- Ruimte tussen rijen ```this.setVgap(10);```  
+- Ruimte rond/van randen ```this.setPadding(new Insets(25,25,25,25));```  
+Om elementen toe te voegen:  
+```
+//3 parameters
+this.add(naam, kolom, rij);
+//5 parameters
+this.add(naam, kolom, rij, kolspan, rijspan);
+```
+- Elementen aligneren: ```setHalignment(element, HPos.LEFT);```  
+- ToolTip:  
+```
+Tooltip t = new Tooltip();
+t.setText("blabla");
+element.setTooltip(t);
+```
+
+### EventHandling
+1) Event listener registreren op je component  
+2) Implementeer een event-handling methode  
+- Method ref (SceneBuilder)  
+```
+//Deze vereist een methode binnen zelfde klasse met zelfde returntype als interface
+element.setOnAction(this::methodeNaam);
+```  
+Via SceneBuilder  
+- Bij properties rechts ga je naar Code  
+- Geef fx:id, vb btnKlikHier  
+- OnAction: naam van methode  
+- Safe en genereer controller opnieuw, kopieer eerst wat je al had!!  
+- Werk onAction methode uit  
+- Module-info: add ```opens gui;```  
+
+- Lambda expressie  
+```
+element.setOnAction(evt -> acties);
+```
+- Anonieme innnerklasse
+```
+element.setOnAction(new Eventhandler<ActionEvent>() {
+  @Override
+  public void handle(ActionEvent evt) {
+    beschrijf acties
+  }
+}
+```
+
+### Wisselen van scherm
+Deze heeft sowieso een tweede file nodig onder package met vb naam tweedeScherm  
+Zorg er voor dat de constructor van je tweede scherm sws 1 parameter meekrijgt, nl. een scene
+
+In de methode van je eerste scherm, waar je na actie een nieuw scherm wilt openen:  
+- Maak object van tweede scherm aan ```naamTweedeScherm ts = new naamTweedeScherm(parameters, this)```  
+ - Let op the ```this```, hier geef je je volledig eerste scherm mee om te kunnen terugkeren  
+- Maak nieuwe scene: ```Scene scene = new Scene(ts, px, px);```  
+- Vraag stage op: ```Stage stage = (Stage) this.getScene().getWindow();```  
+- Set stage: ```stage.setScene(scene);```  
+
+In methode van je terugkeerknop eventhandles van je tweede scherm:
+```
+btnTerug.setOnAction(evt -> {Stage stage = (Stage) (getScene().getWindow());
+				stage.setScene(login.getScene());
+			    });
+```  
+
+### Menu balk
+Zie Hoofdstuk 5 voorbeeld 5
+
+### Alert scherm
+```
+Alert alert = new Alert(Alertype.NAAMTYPE);
+alert.setTitle("");
+alert.setHeaderText("");
+alert.setContentText("");
+alert.showAndWait();
+
+//Als type CONFIRMATION is, krijg je 2 opties
+//Sla antwoord van showAndWait op!
+Optional<ButtonType> result = alert.showAndWait();
+if(result.get() == ButtonType.OK) {
+  blabla
+} else {
+  blabla
+}
+```
+ 
 ## Hoofdstuk 6 Collections
 Belangrijk om te weten: Array hoort **niet** thuis in Collection framework!  
 --> zie conversions
@@ -276,7 +416,11 @@ Voor het gebruik van een stream vertrekken we altijd van een Array of een Collec
 ```.toArray()``` --> vb. toArray(Employee[]::new);  
 ```.collect()``` --> vb. collect(Collectors.toList());  
 
+## Hoofdstuk 8 Strings
 
+
+
+## Hoofdstuk 9 Bestandsverwerking
 
 
 # OOSD Conversions
