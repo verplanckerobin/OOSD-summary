@@ -421,6 +421,34 @@ Voor het gebruik van een stream vertrekken we altijd van een Array of een Collec
 
 
 ## Hoofdstuk 9 Bestandsverwerking
+### Tekst wegschrijven:  
+![image](https://user-images.githubusercontent.com/68321900/120449654-e682bf00-c38f-11eb-993d-cd903ca50917.png)  
+
+Methodes van de scanner:  
+- hasNext(), hasNextInt()
+- next(), nextLine()
+- nextInt()
+- ...
+
+Exceptions bij het lezen:  
+- InvalidPathException: het opgegeven pad klopt niet  
+- IOException: het opgegeven bestand wordt niet gevonden  
+- InputMismatchException: indien de organisatie/type gegevens niet overeenstemmen  
+- NoSuchElementException: er ontbreken elemenenten  
+- IllegalStateException: in geval van lezen terwijl Scanner reeds gesloten is  
+
+Gebruik steeds **Try with resources** 
+
+Uitlezen tekstbestanden: check tot einde met hasNext  
+Uitlezen objecten serialisatie: while(true) en wacht tot EOFileException  
+
+Gebruik **H9 Voorbeelden**  
+- tekstbestand.persistentie.AccountRecordMapper  
+- serialisatie.persistentie.AccountRecordMapper  
+
+### Objecten wegschrijven: implements Serializable!   
+![image](https://user-images.githubusercontent.com/68321900/120449729-fd291600-c38f-11eb-8ae8-ff33cd086e5c.png)  
+
 
 
 # OOSD Conversions
