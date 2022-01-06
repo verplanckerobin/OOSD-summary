@@ -200,39 +200,17 @@ Background:
 - radial-gradient
   
 Lijsten:
- 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- list-style-type
+- list-style-image
+- list-style-position
+    
+Tekstopmaak:
+- font-family
+- font-size
+- font-weight
+- line-height = regelafstand
+- text-align = uitlijnen
+- text-decoration
+- text-indent
+- text-orientation: horizontaal of verticaal
+- text-overflow: overlopende tekst , bepaalt welk visueel effect de gebruiker krijgt als er meer tekst is dan hij ziet (clip, ellipses)
