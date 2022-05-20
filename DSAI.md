@@ -13,7 +13,7 @@ import seaborn as sns
 import altair as alt
 ```
 ## Hoofdstuk 1
-- read csv: `dataset = pd.read_csv("path")`
+- read csv: `dataset = pd.read_csv("path", delimiter = "teken om te splitsen")`
 - basic operation on dataset:
   - `.info()` = general information
   - `len(dataset)` = aantal rijen
@@ -39,7 +39,32 @@ import altair as alt
 - kolom toevoegen volgens functie of dictionary = `dataset['NieuweKolomNaam'] = dataset['KolomNaam'].map(dict/function)`
 
 ## Hoofdstuk 2
+- voorgemaakte datasets inladen van Seaborn: `dataset = sns.load_dataset('naam')`
+- modus: `dataset.mode()`
+- standaardafwijking: `dataset['KolomNaam'].std()`
+- variantie:`dataset['KolomNaam'].var()`
+- skewness: `dataset['KolomNaam'].skew()`
+- kurtosis: `dataset['KolomNaam'].kurtosis()`
+- minimum: `dataset['KolomNaam'].min()`
+- maximum: `dataset['KolomNaam'].max()`
+- mediaan: `dataset['KolomNaam'].median()`
+- range: `dataset['KolomNaam'].max() - dataset['KolomNaam'].min()`
+- kwartielen:
+  - `kwartielen = [0.0, 0.25, 0.5, 0.75, 1.0]`
+  - `dataset['KolomNaam'].quantile(percentiles)`
+  - `dataset['KolomNaam']['25% of 75']` 
+- inter kwartiel afstand: `dataset['KolomNaam'].quantile(.75) - dataset['KolomNaam'].quantile(.25)`
 
+- barchart: `sns.catplot(data = dataset, kind = "count", x = "KolomNaam", aspect = breedte)`
+- boxplot: `sns.boxplot(data = dataset, x = "KolomNaam")`
+- violinplot: `sns.violinplot(data = dataset, x = "KolomNaam")`
+- probability density graph: `sns.kdeplot(x = dataset["KolomNaam"]);`
+- histogram + prob dens: `sns.displot(x = dataset['KolomNaam'], kde=True);`
+- barchart voor kwantitatieve variabelen: `sns.countplot(data = dataset, x = 'KolomNaam', hue = 'KolomNaam')`
+- scatter diagram: 
+  - `graph = sns.FacetGrid(data = dataset, col="KolomNaam", hue="KolomNaam")`
+  - `graph.map(sns,kdeplot, "KolomNaam"`
+  - `grapgh.add_legend()`
 
 ## Hoofdstuk 3
 
