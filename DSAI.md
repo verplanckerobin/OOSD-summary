@@ -67,7 +67,43 @@ import altair as alt
   - `grapgh.add_legend()`
 
 ## Hoofdstuk 3
+- plot probability density function: `plt.plot(dataset, stats.norm.pdf(dataset, 0, 1)`
+  - 0 & 1 zijn default maar meestal gebruikt men m en s met m = gemiddelde en s = standaardafwijking
+- data array met waarden creeren: `naam = np.linespace(startwaarde, eindwaarde, num=aantal)`
+  - hier wordt voor start/eindwaarde vaak x standaard deviaties gebruikt dus (m - x * s) & (m + x * s)
+- data array die een normaalverdeling heeft: `naam = np.random.normal(m, s, size=n)`
+- plot histogram: `sns.histplot(dataset)`
+- plot density histogram: `sns.histplot(dataset, stat = "density)`
 
+- left tail probability: `stats.norm.cdf(x, df=d)`
+- right tail probability: `stats.norm.sf(x, df=d)`
+- probability density op x: `stats.norm.pdf(x, df=d)`
+- p% observations verwacht lager dan resultaat: `stats.norm.isf(1 - p, df=d)`
+
+- left tail probability: `stats.t.cdf(x, m, s)`
+- right tail probability: `stats.t.sf(x, m, s)`
+- probability density op x: `stats.t.pdf(x, m, s)`
+- p% observations verwacht lager dan resultaat: `stats.t.isf(1 - p, m, s)`
+
+- z score: `stats.norm.isf(alpha / 2)`
+- grens links (lower): `m - z * s / np.sqrt(n)`
+- grens rechts (higher): `m + z * s / np.sqrt(n)`
+
+- Left Tail probability plot
+  ```
+  # X-values
+  dist_x = np.linspace(m - standaardafwijking * s, m + standaardafwijking * s, num=aantal waarden)
+  # Y-values for drawing the Gauss curve
+  dist_y = stats.norm.pdf(dist_x, m, s)
+  # Plot the Gauss-curve
+  plt.plot(dist_x, dist_y)
+  # Fill the area left of x
+  plt.fill_between(dist_x, 0, dist_y, where=dist_x <= x, color='lightblue')
+  # Show the mean with an orange line
+  plt.axvline(m, color="orange", lw=2)
+  # Show x with a green line
+  plt.axvline(x, color="green")
+  ```
 
 ## Hoofdstuk 4
 
