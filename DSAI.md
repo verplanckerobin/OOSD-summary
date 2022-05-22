@@ -75,34 +75,258 @@ import altair as alt
 - plot histogram: `sns.histplot(dataset)`
 - plot density histogram: `sns.histplot(dataset, stat = "density)`
 
+Z-test
 - left tail probability: `stats.norm.cdf(x, df=d)`
 - right tail probability: `stats.norm.sf(x, df=d)`
 - probability density op x: `stats.norm.pdf(x, df=d)`
-- p% observations verwacht lager dan resultaat: `stats.norm.isf(1 - p, df=d)`
+- p% observations verwacht lager dan resultaat: `stats.norm.isf(1 - p, df=d)`  
+- z score: `stats.norm.isf(alpha / 2)`
+- grens links (lower): `m - z * s / np.sqrt(n)`
+- grens rechts (higher): `m + z * s / np.sqrt(n)`
 
+
+T-test
 - left tail probability: `stats.t.cdf(x, m, s)`
 - right tail probability: `stats.t.sf(x, m, s)`
 - probability density op x: `stats.t.pdf(x, m, s)`
 - p% observations verwacht lager dan resultaat: `stats.t.isf(1 - p, m, s)`
+- t-score: `stats.t.isf(alpha/2, df = n - 1)`
+- grens links (lower): `m - t * s / np.sqrt(n)`
+- grens rechts (higher): `m + t * s / np.sqrt(n)`
 
-- z score: `stats.norm.isf(alpha / 2)`
-- grens links (lower): `m - z * s / np.sqrt(n)`
-- grens rechts (higher): `m + z * s / np.sqrt(n)`
 
 - Left Tail probability plot
   ```
   # X-values
   dist_x = np.linspace(m - standaardafwijking * s, m + standaardafwijking * s, num=aantal waarden)
+  
   # Y-values for drawing the Gauss curve
   dist_y = stats.norm.pdf(dist_x, m, s)
+  
   # Plot the Gauss-curve
   plt.plot(dist_x, dist_y)
+  
   # Fill the area left of x
   plt.fill_between(dist_x, 0, dist_y, where=dist_x <= x, color='lightblue')
+  
   # Show the mean with an orange line
   plt.axvline(m, color="orange", lw=2)
+  
   # Show x with a green line
   plt.axvline(x, color="green")
+  ```
+- Right Tail z-test
+  ```
+  # 1. Formulate hypotheses
+  
+  # 2. Properties of the sample:
+  n = 30      # sample size
+  sm = 3.483  # sample mean
+  s = 0.55    # population standard deviation (assumed to be known)
+  a = 0.05    # significance level (chosen by the researcher)
+  m0 = 3.3    # hypothetical population mean (H0)
+  
+  # 3. Determine value of the test statistic, x (met streep op)
+  
+  # 4. Determine the p-value and reject H0 if p < alpha
+  p = stats.norm.sf(sm, loc=m0, scale=s/np.sqrt(n))
+  print("p-value: %.5f" % p)
+  if(p < a):
+    print("p < a: reject H0")
+  else:
+    print("p > a: do not reject H0")
+    
+  # g-waarde
+  g = m0 + stats.norm.isf(a) * s / np.sqrt(n)
+  print("Critical value g ≃ %.3f" % g)
+  if (sm < g):
+    print("sample mean = %.3f < g = %.3f: do not reject H0" % (sm, g))
+  else:
+    print("sample mean = %.3f > g = %.3f: reject H0" % (sm, g))
+    
+  # plot
+  # X-values
+  dist_x = np.linspace(m0 - 4 * s/np.sqrt(n), m0 + 4 * s/np.sqrt(n), num=201)
+
+  # Y-values for the Gauss curve
+  dist_y = stats.norm.pdf(dist_x, m0, s/np.sqrt(n))
+  fig, dplot = plt.subplots(1, 1)
+  
+  # Plot the Gauss-curve
+  dplot.plot(dist_x, dist_y)
+  
+  # Show the hypothetical population mean with an orange line
+  dplot.axvline(m0, color="orange", lw=2)
+  
+  # Show the sample mean with a red line
+  dplot.axvline(sm, color="red")
+  
+  # Fill the acceptance area in light blue
+  dplot.fill_between(dist_x, 0, dist_y, where=dist_x <= g, color='lightblue')
+  ```
+- Left Tail z-test
+  ```
+  # 1. Formulate hypotheses
+  
+  # 2. Properties of the sample:
+  n = 30      # sample size
+  sm = 3.483  # sample mean
+  s = 0.55    # population standard deviation (assumed to be known)
+  a = 0.05    # significance level (chosen by the researcher)
+  m0 = 3.3    # hypothetical population mean (H0)
+  
+  # 3. Determine value of the test statistic, x (met streep op)
+  
+  # 4. Determine the p-value and reject H0 if p < alpha
+  p = stats.norm.cdf(sm, loc=m0, scale=s/np.sqrt(n))
+  print("p-value: %.5f" % p)
+  if(p < a):
+    print("p < a: reject H0")
+  else:
+    print("p > a: do not reject H0")
+    
+  # g-waarde
+  g = m0 + stats.norm.isf(a) * s / np.sqrt(n)
+  print("Critical value g ≃ %.3f" % g)
+  if (sm < g):
+    print("sample mean = %.3f < g = %.3f: do not reject H0" % (sm, g))
+  else:
+    print("sample mean = %.3f > g = %.3f: reject H0" % (sm, g))
+    
+  # plot
+  # X-values
+  dist_x = np.linspace(m0 - 4 * s/np.sqrt(n), m0 + 4 * s/np.sqrt(n), num=201)
+
+  # Y-values for the Gauss curve
+  dist_y = stats.norm.pdf(dist_x, m0, s/np.sqrt(n))
+  fig, dplot = plt.subplots(1, 1)
+  
+  # Plot the Gauss-curve
+  dplot.plot(dist_x, dist_y)
+  
+  # Show the hypothetical population mean with an orange line
+  dplot.axvline(m0, color="orange", lw=2)
+  
+  # Show the sample mean with a red line
+  dplot.axvline(sm, color="red")
+  
+  # Fill the acceptance area in light blue
+  dplot.fill_between(dist_x, 0, dist_y, where=dist_x <= g, color='lightblue')
+  ```
+- Two-tailed z-test
+  ```
+  # 1. Formulate hypotheses
+  
+  # 2. Properties of the sample:
+  n = 30      # sample size
+  sm = 3.483  # sample mean
+  s = 0.55    # population standard deviation (assumed to be known)
+  a = 0.05    # significance level (chosen by the researcher)
+  m0 = 3.3    # hypothetical population mean (H0)
+  
+  # 3. Determine value of the test statistic, x (met streep op)
+  
+  # 4. Determine the p-value and reject H0 if p < alpha /2
+  p = stats.norm.sf(sm, loc=m0, scale=s/np.sqrt(n))
+  print("p-value: %.5f" % p)
+  if(p < a/2):
+    print("p < a/2: reject H0")
+  else:
+    print("p > a/2: do not reject H0")
+    
+  # g-waarde (nu hebben we er 2)
+  g1 = m0 - stats.norm.isf(a/2) * s / np.sqrt(n)
+  g2 = m0 + stats.norm.isf(a/2) * s / np.sqrt(n)
+
+  print("Acceptance region [g1, g2] ≃ [%.3f, %.3f]" % (g1,g2))
+  if (g1 < sm and sm < g2):
+    print("Sample mean = %.3f is inside acceptance region: do not reject H0" % sm)
+  else:
+    print("Sample mean = %.3f is outside acceptance region: reject H0" % sm)
+    
+  # plot
+  # X-values
+  dist_x = np.linspace(m0 - 4 * s/np.sqrt(n), m0 + 4 * s/np.sqrt(n), num=201)
+  
+  # Y-values
+  dist_y = stats.norm.pdf(dist_x, loc=m0, scale=s/np.sqrt(n))
+  fig, dplot = plt.subplots(1, 1)
+  
+  # Plot
+  dplot.plot(dist_x, dist_y)
+  
+  # Hypothetical population mean in orange
+  dplot.axvline(m0, color="orange", lw=2)
+  
+  # Sample mean in red
+  dplot.axvline(sm, color="red")
+  acc_x = np.linspace(g1, g2, num=101)
+  acc_y = stats.norm.pdf(acc_x, loc=m0, scale=s/np.sqrt(n))
+  
+  # Fill the acceptance region in light blue
+  dplot.fill_between(acc_x, 0, acc_y, color='lightblue')
+  ```
+- Right-tailed t-test
+  ```
+  # 1. Formulate hypotheses
+  
+  # 2. Properties of the sample
+  n = 20      # sample size
+  sm = 3.483  # sample mean
+  ss = 0.55   # sample(!) standard deviation
+  a = 0.05    # significance level (chosen by the researcher)
+  m0 = 3.3    # hypothetical population mean (H0)
+  
+  # 3. Determine value of the test statistic, x (met streep op)
+  
+  # 4. Determine the p-value and reject H0 if p < alpha
+  p = p = stats.t.sf(sm, loc=m0, scale=s/np.sqrt(n), df=n-1)
+  print("p-value: %.5f" % p)
+  if(p < a):
+    print("p < a: reject H0")
+  else:
+    print("p > a: do not reject H0")
+    
+  # g-waarde
+  g = m0 + stats.t.isf(a, df=n-1) * s / np.sqrt(n)
+  print("Critical value g ≃ %.3f" % g)
+  if (sm < g):
+    print("sample mean = %.3f < g = %.3f: do not reject H0" % (sm, g))
+  else:
+    print("sample mean = %.3f > g = %.3f: reject H0" % (sm, g))
+  
+  # plot
+  # X-values
+  dist_x = np.linspace(m0 - 4 * s/np.sqrt(n), m0 + 4 * s/np.sqrt(n), num=201)
+  
+  # Y-values
+  dist_y = stats.t.pdf(dist_x, loc=m0, scale=s/np.sqrt(n), df=n-1)
+  fig, dplot = plt.subplots(1, 1)
+  
+  # Plot
+  dplot.plot(dist_x, dist_y)
+  
+  # Hypothetical population mean in orange
+  dplot.axvline(m0, color="orange", lw=2)
+  
+  # Sample mean in red
+  dplot.axvline(sm, color="red")
+  
+  # Fill the acceptance region in light blue
+  dplot.fill_between(dist_x, 0, dist_y, where=dist_x <= g, color='lightblue')
+  
+  # Shortcut
+  observations = [
+  3, 2, 3, 1, 10, 4, 2, 7, 3, 0,
+  3, 1, 2, 3,  4, 0, 3, 8, 3, 7]
+  a = 0.05
+  m0 = 3.3
+
+  t_stat, p_val = stats.ttest_1samp(observations, m0)
+  print("Sample mean        : %.3f" % np.mean(observations))
+  print("t-score            : %.3f" % t_stat)
+  print("p-value (2-tailed) : %.5f" % p_val)
+  print("p-value (1-tailed) : %.5f" % (p_val/2))
   ```
 
 ## Hoofdstuk 4
