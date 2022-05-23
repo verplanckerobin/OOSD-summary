@@ -330,7 +330,83 @@ T-test
   ```
 
 ## Hoofdstuk 4
+- Chi-squared test
+  ```
+  observed = pd.crosstab(dataset.Kolom, dataset.Kolom)
+  chi2, p, df, expected = stats.chi2_contingency(observed)
 
+  print("Chi-squared       : %.4f" % chi2)
+  print("Degrees of freedom: %d" % df)
+  print("P-value           : %.4f" % p)
+  
+  # plot
+  # x-values:
+  x = np.linspace(0, 15, num=100)
+  # probability density of the chi-squared distribution with 4 degrees of freedom
+  y = stats.chi2.pdf(x, df=dof)
+  # the number q for which the right tail probability is exactly 5%:
+  q = stats.chi2.isf(alpha, df=4)  
+  fig, tplot = plt.subplots(1, 1)
+  tplot.plot(x, y)                     
+  tplot.fill_between(x, y, where=x>=q, color='lightblue')
+  tplot.axvline(q)                     
+  tplot.axvline(chi2, color='orange')  
+  ```
+- Goodness of fit test
+  ```
+  alpha = waarde             # Significance level
+  n = sum(observed)          # Sample size
+  k = len(observed)          # Number of categories
+  dof = k - 1                # Degrees of freedom
+  expected = expected_p * n  # Expected absolute frequencies in the sample
+  g = stats.chi2.isf(alpha, df=dof)  # Critical value
+
+  # Goodness-of-fit-test in Python:
+  chi2, p = stats.chisquare(f_obs=observed, f_exp=expected)
+
+  print("Significance level  ⍺ = %.2f" % alpha)
+  print("Sample size         n = %d" % n)
+  print("k = %d; df = %d" % (k, dof))
+  print("Chi-squared        χ² = %.4f" % chi2)
+  print("Critical value      g = %.4f" % g)
+  print("p-value             p = %.4f" % p)
+  
+  # plot
+  # x-values:
+  x = np.linspace(0, 15, num=100)
+  # probability density of the chi-squared distribution with 4 degrees of freedom
+  y = stats.chi2.pdf(x, df=dof)
+  # the number q for which the right tail probability is exactly 5%:
+  q = stats.chi2.isf(alpha, df=dof)
+
+  fig, tplot = plt.subplots(1, 1)
+  tplot.plot(x, y)
+  tplot.fill_between(x, y, where=x>=q, color='lightblue')
+  tplot.axvline(q)
+  tplot.axvline(chi2, color='orange')
+  ```
+- margin totals CONTROLEREN: `pd.crosstab(dataset.Kolom, dataset.Kolom, margins=True)`
+- margin totals BEREKENEN:
+  ```
+  row_sums = observed.sum(axis=1)
+  col_sums = observed.sum()
+  n = row_sums.sum()
+
+  print(row_sums)
+  print(col_sums)
+  print(f'Number of observations: {n}')
+  ```
+- verwachte resultaten: `expected = np.outer(row_sums, col_sums) / n`
+- X^2 test statistiek: `diffs = (expected - observed)**2 / expected`
+- X^2: `chi_squared = diffs.values.sum()`
+- Cramers V:
+  ```
+  dof = min(observed.shape) - 1
+  cramers_v = np.sqrt(chi_squared / (dof * n))
+  ```
+- stacked bar chart: `observed.plot(kind='bar', stacked=True)`
+- naam kolom wijzigen: `datset = datset.rename(columns={'Oude naam': 'Nieuwe naam'})`
+- unieke waarden printen: `dataset.Kolom.unique()`
 
 ## Hoofdstuk 5
 
