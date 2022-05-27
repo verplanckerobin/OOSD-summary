@@ -428,7 +428,85 @@ T-test
   ```
 
 ## Hoofdstuk 6
+- replot: `sns.relplot(data=dataset,  x=independent variable, y='dependent variable')`
+- regplot (met regression line): `sns.regplot(x=dataset.Kolom, y=dataset.Kolom)`
+- regression line: 
+  ```
+  from sklearn.linear_model import LinearRegression
 
+  dataset_x = dataset.Kolom.values.reshape(-1,1)
+  dataset_y = dataset.Kolom
 
+  weight_model = LinearRegression().fit(dataset_x, dataset_y)
+
+  print(f"Regression line: ŷ = {weight_model.intercept_:.2f} + {weight_model.coef_[0]:.2f} x")
+  ```
+- covariantie: `np.cov(dataset.Kolom, dataset.Kolom, ddof=1)[0][1]`
+- R & R^2: 
+  ```
+  cor = np.corrcoef(dataset.Kolom, dataset.Kolom)[0][1]
+  print(f"R = {abs(cor)}")
+  print(f"R^2 = {cor ** 2}")
+  ```
+- Plots naast elkaar:
+  ```
+  fig, axs = plt.subplots(1, 2, figsize=(20,5))   # 1 = 1 rij, 2 = 2 col
+  sns.scatterplot(ax=axs[0], data=dataset, x='Kolom', y='Kolom')
+  axs[0].set_title("Titel")
+  sns.scatterplot(ax=axs[1], data=dataset, x='Kolom', y='Kolom')
+  axs[1].set_title("Titel")
+  ```
 ## Hoofdstuk 7
+- Linear regression model: 
+  ```
+  # Build a linear regression model
+  demand_lm = LinearRegression().fit(
+    dataset.index.values.reshape((-1,1)),
+    demand_ts.values
+  )
+  # plot the time series and the regression line
+  demand_ts.plot(marker='o')
+  plt.axline((0, demand_lm.intercept_), slope=demand_lm.coef_)
+  ```
+- SMA: `dataset['SMAvalue'] = dataset.demand.rolling(value).mean()`
+- EMA: `dataset['EMA_0.value'] = dataset.demand.ewm(alpha=.value, adjust=False).mean()`
+- Single exponential smoothing:
+  ```
+  from statsmodels.tsa.holtwinters import SimpleExpSmoothing
+  dataset_ses = SimpleExpSmoothing(dataset.demand).fit(smoothing_level=0.value)
+
+  dataset['SES'] = dataset_ses.fittedvalues
+
+  dataset.demand.plot(legend=True)
+  dataset.SES.plot(legend=True)
+  
+  # forecast
+  dataset_ses_fcast = demand_ses.forecast(10)
+
+  dataset.demand.plot(marker='o', legend=True) # Observations
+  dataset.SES.plot(legend=True)                # SES fitted valuis
+  dataset_ses_fcast.plot(marker='.', legend=True, label='Forecast')
+  
+  # print options
+  demand_ses_fcast.values
+  demand_ses.params_formatted
+  ```
+- Double exponential smoothing (Holt):
+  ```
+  from statsmodels.tsa.api import Holt
+
+  dataset_des = Holt(dataset.demand).fit(smoothing_level=.1, smoothing_trend=.2)
+
+  dataset['DES'] = dataset_des.fittedvalues
+
+  dataset.demand.plot(legend=True)
+  dataset.DES.plot(legend=True)
+  
+  # forecast
+  dataset_des_fcast = dataset_des.forecast(10)
+  dataset.demand.plot(marker='o', legend=True) # Observations
+  dataset.DES.plot(legend=True, label='DES fitted values')              
+  dataset_des_fcast.plot(marker='.', legend=True, label='Forecast DES') 
+  ```
+- Triple exponential smoothing (Holt-winter):
 
