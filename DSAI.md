@@ -409,7 +409,23 @@ T-test
 - unieke waarden printen: `dataset.Kolom.unique()`
 
 ## Hoofdstuk 5
-
+- T-test twee onafhankelijke samples: `stats.ttest_ind(a=dataset1, b=dataset2, alternative='less', equal_var=False)`
+  - 'less' omdat we onderzoeken of a kleiner is dan b
+- T-test twee afhankelijke samples: `stats.ttest_rel(a=dataset1, b=dataset2, alternative='less')`
+  - 'less' omdat we onderzoeken of a kleiner is dan b
+- Cohon's d:
+  ```
+  # function
+  def cohen_d(a, b):
+    na = len(a)
+    nb = len(b)
+    pooled_sd = np.sqrt( ((na-1) * a.std(ddof=1)**2 +
+                          (nb-1) * b.std(ddof=1)**2) / (na + nb - 2) )
+    return (b.mean() - a.mean()) / pooled_sd
+    
+  # use
+  cohen_d(regular, additives)
+  ```
 
 ## Hoofdstuk 6
 
